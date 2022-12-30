@@ -4,7 +4,7 @@ const { genSaltSync, hashSync ,compare} = require("bcrypt")
 //sign will create json web token , it takes three parameter
 //(object which we want to sign and we want to create json web token, key:encrpyting key, optional parameter  )
 const { sign } = require('jsonwebtoken');
-
+require('dotenv').config()
 
 
 module.exports = {
@@ -28,7 +28,7 @@ module.exports = {
             const result = compare(body.password, results.password)
             if (result) {
                 results.password = undefined
-                const jsonToken = sign({ resul: results }, "qwe123", { expiresIn: "1h" });
+                const jsonToken = sign({ resul: results }, process.env.SECRET_KEY, { expiresIn: "1h" });
                 return res.status(200).json({
                     status: 1,
                     data: results,
